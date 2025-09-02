@@ -26,7 +26,7 @@
             padding: 0 20px;
         }
 
-        /* --- CABEÇALHO ATUALIZADO --- */
+        /* --- CABEÇALHO --- */
         header {
             background: #2c2c2c;
             border-bottom: 3px solid #00ff9b;
@@ -77,9 +77,6 @@
             min-height: 1.2em;
         }
 
-        /* --- EFEITO DE DIGITAÇÃO (CSS) REMOVIDO --- */
-        /* As regras para .typing-effect e @keyframes blinking-cursor foram deletadas. */
-
         header nav ul {
             padding: 0;
             margin: 0;
@@ -103,7 +100,7 @@
             color: #00ff9b;
         }
 
-        /* --- BANNER PRINCIPAL (SEM TEXTO) --- */
+        /* --- BANNER PRINCIPAL --- */
         #banner {
             min-height: 80vh;
             position: relative;
@@ -235,6 +232,66 @@
             padding: 20px 0;
             border-top: 3px solid #00ff9b;
         }
+
+        /* --- ESTILOS PARA DISPOSITIVOS MÓVEIS (DESIGN RESPONSIVO) --- */
+
+        @media (max-width: 768px) {
+
+            /* Ajusta o container principal para ocupar mais espaço na tela */
+            .container {
+                width: 90%;
+            }
+
+            /* --- AJUSTES NO CABEÇALHO --- */
+            header .container {
+                flex-direction: column; /* Coloca o logo/marca e o menu um abaixo do outro */
+                gap: 15px;
+            }
+
+            #branding {
+                gap: 10px;
+            }
+            
+            #branding img {
+                max-height: 50px; /* Diminui um pouco o logo */
+            }
+
+            #branding .texto-marca h3 {
+                font-size: 1.2rem; /* Diminui o nome da empresa */
+            }
+
+            #branding .texto-marca p {
+                font-size: 0.8rem; /* Diminui o slogan */
+            }
+            
+            header nav ul li {
+                margin: 0 10px; /* Diminui o espaçamento entre os links do menu */
+            }
+            
+            header nav ul li a {
+                font-size: 14px;
+            }
+
+            /* --- AJUSTES GERAIS DE FONTE --- */
+            section h2 {
+                font-size: 1.8rem; /* Diminui o tamanho dos títulos das seções */
+                margin-bottom: 30px;
+            }
+
+            #banner {
+                min-height: 50vh; /* Diminui a altura do banner principal */
+            }
+
+            /* Ajusta o padding das seções para telas menores */
+            section {
+                padding: 40px 0;
+            }
+            
+            /* Ajusta o grid de serviços para garantir que não fiquem espremidos */
+            #servicos .servicos-grid {
+                grid-template-columns: 1fr; /* Força uma única coluna no mobile */
+            }
+        }
     </style>
 </head>
 <body>
@@ -320,12 +377,13 @@
         </div>
     </section>
 
-<footer>
+    <footer>
         <div class="container">
             <p>&copy; 2025 BG Impressões Especiais impressões 3D. Todos os direitos reservados.</p>
             <p>Estância Velha - RS, Brasil</p>
         </div>
     </footer>
+
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script>
         AOS.init({
@@ -344,7 +402,7 @@
                 if (index < textToType.length) {
                     typingElement.innerHTML += textToType.charAt(index);
                     index++;
-                    setTimeout(type, 70); // Velocidade um pouco mais rápida
+                    setTimeout(type, 70);
                 }
             }
 
@@ -354,4 +412,3 @@
 
 </body>
 </html>
-
