@@ -191,29 +191,25 @@
         /* --- PORTFÓLIO: CÓDIGO ATUALIZADO --- */
         #portfolio .galeria {
             display: grid;
-            /* Mantém o layout responsivo */
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            /* Diminuímos o valor mínimo para ajudar a caberem 4 colunas em telas maiores */
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
             gap: 20px;
         }
 
         #portfolio .galeria .item-galeria {
-            /* Adicionamos uma proporção para que todos os cards sejam quadrados */
             aspect-ratio: 1 / 1; 
-            border-radius: 12px; /* Aumentamos o arredondamento */
-            overflow: hidden; /* Essencial para cortar a imagem que "sobra" */
+            border-radius: 12px; 
+            overflow: hidden; 
             transition: transform 0.3s, box-shadow 0.3s;
             border: 1px solid #444;
         }
 
         #portfolio .galeria .item-galeria img {
             width: 100%;
-            height: 100%; /* Faz a imagem ocupar todo o contêiner */
+            height: 100%; 
             display: block;
-            
-            /* ESTA É A MUDANÇA PRINCIPAL */
-            object-fit: cover; /* Faz a imagem cobrir o espaço, cortando o excesso */
-            
-            transition: transform 0.4s ease; /* Efeito de zoom suave */
+            object-fit: cover; 
+            transition: transform 0.4s ease; 
         }
         
         #portfolio .galeria .item-galeria:hover {
@@ -221,7 +217,6 @@
             box-shadow: 0 0 15px #00ff9b;
         }
         
-        /* Adiciona um efeito de zoom na imagem ao passar o mouse no card */
         #portfolio .galeria .item-galeria:hover img {
             transform: scale(1.1);
         }
@@ -359,11 +354,6 @@
             
             #servicos .servicos-grid {
                 grid-template-columns: 1fr;
-            }
-
-            /* No mobile, não precisamos da altura fixa. A proporção já cuida disso. */
-            #portfolio .galeria .item-galeria img {
-                /* A altura já está definida como 100% do container, que agora tem proporção 1/1. */
             }
 
             #whatsapp-button {
