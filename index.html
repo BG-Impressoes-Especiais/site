@@ -104,7 +104,6 @@
             color: #00ff9b;
         }
 
-        /* --- BOTÃO HAMBÚRGUER (ESCONDIDO NO DESKTOP) --- */
         #hamburger-menu {
             display: none;
             background: none;
@@ -151,7 +150,6 @@
             color: #00ff9b;
         }
         
-        /* Seção Sobre */
         #sobre p {
             text-align: center;
             max-width: 800px;
@@ -159,7 +157,6 @@
             font-size: 1.1rem;
         }
         
-        /* Seção de Serviços */
         #servicos .servicos-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
@@ -191,38 +188,40 @@
             font-size: 1.5rem;
         }
         
-        /* --- CORREÇÃO DO ZOOM DO PORTFÓLIO E ESTILOS --- */
+        /* --- PORTFÓLIO: AJUSTES FINAIS NO ZOOM E LAYOUT --- */
         #portfolio .galeria {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            grid-auto-rows: 250px; /* Define uma altura maior para as linhas da galeria */
             gap: 20px;
         }
 
         #portfolio .galeria .item-galeria {
-            overflow: hidden; /* Importante: esconde qualquer parte da imagem que tente sair do container */
+            overflow: hidden;
             border-radius: 8px;
             border: 2px solid #333;
-            box-shadow: 0 0 5px rgba(0,0,0,0.5); /* Sutil sombra para destacar */
+            box-shadow: 0 0 5px rgba(0,0,0,0.5);
             transition: transform 0.3s, box-shadow 0.3s;
         }
         
         #portfolio .galeria .item-galeria img {
             width: 100%;
-            height: 100%; /* Garante que a imagem preencha o container */
-            object-fit: cover; /* Recorta a imagem para preencher sem distorcer (mantém a proporção) */
-            display: block; /* Remove espaços extras abaixo da imagem */
-            transition: transform 0.3s ease; /* Transição suave apenas para o zoom */
+            height: 100%;
+            object-fit: cover;
+            object-position: center top; /* Foca o corte na parte de CIMA da imagem */
+            display: block;
+            transition: transform 0.3s ease;
         }
 
         #portfolio .galeria .item-galeria:hover {
-            transform: translateY(-5px); /* Efeito sutil de levantar */
-            box-shadow: 0 0 15px #00ff9b; /* Brilho verde ao passar o mouse */
+            transform: translateY(-5px);
+            box-shadow: 0 0 15px #00ff9b;
         }
 
         #portfolio .galeria .item-galeria:hover img {
-            transform: scale(1.1); /* Zoom na imagem */
+            transform: scale(1.1);
         }
-        /* --- FIM DA CORREÇÃO DO PORTFÓLIO --- */
+        /* --- FIM DOS AJUSTES DO PORTFÓLIO --- */
 
 
         /* Seção Contato */
@@ -262,29 +261,30 @@
             border-top: 3px solid #00ff9b;
         }
 
-        /* --- BOTÃO FLUTUANTE DO WHATSAPP --- */
+        /* --- BOTÃO WHATSAPP: CORREÇÃO DO SUBLINHADO --- */
         #whatsapp-button {
-            position: fixed; /* Fixa o botão na tela */
-            bottom: 25px; /* Distância do fundo */
-            right: 25px; /* Distância da direita */
-            background-color: #25D366; /* Cor verde do WhatsApp */
+            position: fixed;
+            bottom: 25px;
+            right: 25px;
+            background-color: #25D366;
             color: white;
-            border-radius: 50%; /* Torna o botão redondo */
-            width: 60px; /* Largura do botão */
-            height: 60px; /* Altura do botão */
+            border-radius: 50%;
+            width: 60px;
+            height: 60px;
             display: flex;
             justify-content: center;
             align-items: center;
-            font-size: 2.2rem; /* Tamanho do ícone */
+            font-size: 2.2rem;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
-            z-index: 1000; /* Garante que fique acima de outros elementos */
+            z-index: 1000;
             transition: transform 0.3s ease;
+            text-decoration: none; /* Remove o sublinhado do link */
         }
 
         #whatsapp-button:hover {
-            transform: scale(1.1); /* Efeito de zoom ao passar o mouse */
+            transform: scale(1.1);
         }
-        /* --- FIM DO BOTÃO FLUTUANTE DO WHATSAPP --- */
+        /* --- FIM DO BOTÃO WHATSAPP --- */
 
 
         /* --- ESTILOS PARA DISPOSITIVOS MÓVEIS (DESIGN RESPONSIVO) --- */
@@ -295,7 +295,6 @@
                 width: 90%;
             }
 
-            /* --- CABEÇALHO MOBILE COM MENU HAMBÚRGUER --- */
             header .container {
                 flex-wrap: wrap;
             }
@@ -321,8 +320,7 @@
                 width: 100%;
                 margin-top: 15px;
             }
-
-            /* Estilo para quando o menu está aberto */
+            
             header nav.menu-open {
                 display: block;
             }
@@ -343,8 +341,6 @@
                 border-top: 1px solid #444;
             }
 
-
-            /* --- AJUSTES GERAIS DE FONTE E LAYOUT --- */
             section h2 {
                 font-size: 1.8rem;
                 margin-bottom: 30px;
@@ -362,7 +358,6 @@
                 grid-template-columns: 1fr;
             }
 
-            /* Ajuste o botão flutuante para mobile, se necessário */
             #whatsapp-button {
                 width: 50px;
                 height: 50px;
@@ -503,6 +498,5 @@
             });
         });
     </script>
-
 </body>
 </html>
