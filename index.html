@@ -6,7 +6,6 @@
     <title>BG Impressões Especiais - Soluções em 3D</title>
     
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
-    
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 
     <style>
@@ -27,11 +26,11 @@
             padding: 0 20px;
         }
 
-        /* Cabeçalho e Navegação */
+        /* --- CABEÇALHO ATUALIZADO --- */
         header {
             background: #2c2c2c;
             border-bottom: 3px solid #00ff9b;
-            padding: 1rem 0;
+            padding: 0.8rem 0; /* Ajustei o padding */
             position: sticky;
             top: 0;
             z-index: 1000;
@@ -43,9 +42,34 @@
             justify-content: space-between;
             align-items: center;
         }
+        
+        /* Novo container para logo e texto */
+        #branding {
+            display: flex;
+            align-items: center;
+            gap: 15px; /* Espaço entre o logo e o texto */
+        }
 
-        header #logo img {
-            max-height: 50px;
+        #branding img {
+            max-height: 65px; /* LOGO AUMENTADO */
+            display: block;
+        }
+
+        #branding .texto-marca h3 {
+            margin: 0;
+            padding: 0;
+            color: #ffffff;
+            font-size: 1.5rem;
+            letter-spacing: 1px;
+        }
+        
+        /* Estilo para o Slogan no cabeçalho */
+        #branding .texto-marca p {
+            margin: 0;
+            padding: 0;
+            color: #00ff9b; /* Cor de destaque para o slogan */
+            font-size: 0.9rem;
+            font-style: italic;
         }
 
         header nav ul {
@@ -71,23 +95,16 @@
             color: #00ff9b;
         }
 
-        /* Seção do Banner Principal com a Imagem de Fundo */
+        /* --- BANNER PRINCIPAL (SEM TEXTO) --- */
         #banner {
             min-height: 80vh;
             position: relative;
-            /* IMAGEM CORRIGIDA PARA .png */
             background-image: url('imagens/bg_banner.png'); 
             background-size: cover;
             background-position: center center;
             background-repeat: no-repeat;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            text-align: center;
-            flex-direction: column;
         }
 
-        /* Efeito de overlay para escurecer o fundo e destacar o texto */
         #banner::before {
             content: '';
             position: absolute;
@@ -97,38 +114,6 @@
             height: 100%;
             background: rgba(0, 0, 0, 0.7);
             z-index: 1;
-        }
-        
-        /* Garante que o conteúdo do banner (texto) fique na frente do overlay */
-        #banner .container {
-            position: relative;
-            z-index: 2;
-        }
-
-        #banner h1 {
-            font-size: 3.8rem;
-            color: #ffffff;
-            text-shadow: 2px 2px 15px rgba(0,0,0,0.8);
-        }
-        
-        /* Efeito de digitação */
-        .typing-effect {
-            border-right: .15em solid #00ff9b;
-            white-space: nowrap;
-            overflow: hidden;
-            display: inline-block;
-            animation: 
-                blinking-cursor .75s step-end infinite;
-        }
-
-        @keyframes blinking-cursor {
-            from, to { border-color: transparent }
-            50% { border-color: #00ff9b; }
-        }
-
-        #banner h1 span {
-            color: #00ff9b;
-            font-weight: bold;
         }
 
         /* Seções */
@@ -154,7 +139,7 @@
             font-size: 1.1rem;
         }
         
-        /* Nova Seção de Serviços */
+        /* Seção de Serviços */
         #servicos .servicos-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
@@ -248,8 +233,12 @@
 
     <header>
         <div class="container">
-            <div id="logo">
+            <div id="branding">
                 <a href="#"><img src="imagens/logo.png" alt="Logo BG Impressões Especiais"></a>
+                <div class="texto-marca">
+                    <h3>BG Impressões Especiais</h3>
+                    <p>Se pode ser pensado, pode ser impresso.</p>
+                </div>
             </div>
             <nav>
                 <ul>
@@ -262,11 +251,7 @@
         </div>
     </header>
 
-    <section id="banner">
-        <div class="container" data-aos="zoom-in">
-            <h1>Se pode ser pensado, <br>pode ser <span id="typing-slogan"></span></h1>
-        </div>
-    </section>
+    <section id="banner" data-aos="zoom-in"></section>
 
     <section id="sobre">
         <div class="container" data-aos="fade-up">
@@ -340,24 +325,6 @@
             once: true,
         });
     </script>
-
-    <script>
-        const textToType = "impresso.";
-        const typingElement = document.getElementById('typing-slogan');
-        let index = 0;
-
-        function type() {
-            if (index < textToType.length) {
-                typingElement.innerHTML += textToType.charAt(index);
-                typingElement.classList.add('typing-effect');
-                index++;
-                setTimeout(type, 150);
-            } else {
-                typingElement.style.borderRight = 'none';
-            }
-        }
-
-        setTimeout(type, 1000);
-    </script>
-</body>
+    
+    </body>
 </html>
