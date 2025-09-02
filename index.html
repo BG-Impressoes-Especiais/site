@@ -30,7 +30,7 @@
         header {
             background: #2c2c2c;
             border-bottom: 3px solid #00ff9b;
-            padding: 0.8rem 0; /* Ajustei o padding */
+            padding: 0.8rem 0;
             position: sticky;
             top: 0;
             z-index: 1000;
@@ -43,15 +43,14 @@
             align-items: center;
         }
         
-        /* Novo container para logo e texto */
         #branding {
             display: flex;
             align-items: center;
-            gap: 15px; /* Espaço entre o logo e o texto */
+            gap: 15px;
         }
 
         #branding img {
-            max-height: 65px; /* LOGO AUMENTADO */
+            max-height: 65px;
             display: block;
         }
 
@@ -63,13 +62,27 @@
             letter-spacing: 1px;
         }
         
-        /* Estilo para o Slogan no cabeçalho */
         #branding .texto-marca p {
             margin: 0;
             padding: 0;
-            color: #00ff9b; /* Cor de destaque para o slogan */
+            color: #00ff9b;
             font-size: 0.9rem;
             font-style: italic;
+            height: 1.2em; /* Altura para evitar que o layout "pule" */
+        }
+
+        /* --- EFEITO DE DIGITAÇÃO (CSS) --- */
+        .typing-effect {
+            border-right: .1em solid #00ff9b; /* O cursor piscando */
+            white-space: nowrap;
+            overflow: hidden;
+            animation: 
+                blinking-cursor .75s step-end infinite;
+        }
+
+        @keyframes blinking-cursor {
+            from, to { border-color: transparent }
+            50% { border-color: #00ff9b; }
         }
 
         header nav ul {
@@ -237,7 +250,7 @@
                 <a href="#"><img src="imagens/logo.png" alt="Logo BG Impressões Especiais"></a>
                 <div class="texto-marca">
                     <h3>BG Impressões Especiais</h3>
-                    <p>Se pode ser pensado, pode ser impresso.</p>
+                    <p id="slogan-digitado"></p>
                 </div>
             </div>
             <nav>
@@ -326,5 +339,32 @@
         });
     </script>
     
-    </body>
+    <script>
+        // Espera a página carregar para iniciar a animação
+        document.addEventListener('DOMContentLoaded', function() {
+            const textToType = "Se pode ser pensado, pode ser impresso.";
+            const typingElement = document.getElementById('slogan-digitado');
+            let index = 0;
+
+            function type() {
+                if (index < textToType.length) {
+                    typingElement.innerHTML += textToType.charAt(index);
+                    // Adiciona a classe apenas uma vez, no início
+                    if (index === 0) {
+                        typingElement.classList.add('typing-effect');
+                    }
+                    index++;
+                    setTimeout(type, 80); // Velocidade da digitação
+                } else {
+                    // Para o cursor de piscar quando terminar
+                    typingElement.style.borderRightColor = 'transparent';
+                }
+            }
+
+            // Inicia a digitação após um pequeno atraso para dar tempo da página renderizar
+            setTimeout(type, 1000);
+        });
+    </script>
+
+</body>
 </html>
