@@ -54,10 +54,9 @@
             display: block;
         }
 
-        /* --- CORREÇÃO DE LAYOUT DO TEXTO --- */
         #branding .texto-marca {
             display: flex;
-            flex-direction: column; /* Garante que o slogan fique abaixo do nome */
+            flex-direction: column;
             justify-content: center;
         }
 
@@ -75,24 +74,11 @@
             color: #00ff9b;
             font-size: 0.9rem;
             font-style: italic;
-            min-height: 1.2em; /* Espaço reservado para o slogan */
+            min-height: 1.2em;
         }
 
-        /* --- EFEITO DE DIGITAÇÃO (CSS) --- */
-        .typing-effect {
-            border-right: .1em solid #00ff9b;
-            white-space: nowrap;
-            overflow: hidden;
-            display: inline-block; /* Importante para o cursor */
-            vertical-align: bottom;
-            animation: 
-                blinking-cursor .75s step-end infinite;
-        }
-
-        @keyframes blinking-cursor {
-            from, to { border-color: transparent }
-            50% { border-color: #00ff9b; }
-        }
+        /* --- EFEITO DE DIGITAÇÃO (CSS) REMOVIDO --- */
+        /* As regras para .typing-effect e @keyframes blinking-cursor foram deletadas. */
 
         header nav ul {
             padding: 0;
@@ -358,18 +344,11 @@
                 if (index < textToType.length) {
                     typingElement.innerHTML += textToType.charAt(index);
                     index++;
-                    setTimeout(type, 80);
-                } else {
-                    // CORREÇÃO: Remove a classe da animação para parar de piscar
-                    typingElement.classList.remove('typing-effect');
-                    // Garante que a barra não fique visível
-                    typingElement.style.borderRight = 'none';
+                    setTimeout(type, 70); // Velocidade um pouco mais rápida
                 }
             }
 
-            // CORREÇÃO: Mostra o cursor piscando ANTES de começar a digitar
-            typingElement.classList.add('typing-effect');
-            setTimeout(type, 700); // Um pequeno atraso para o efeito
+            setTimeout(type, 700);
         });
     </script>
 
