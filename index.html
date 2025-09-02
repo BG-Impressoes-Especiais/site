@@ -54,6 +54,13 @@
             display: block;
         }
 
+        /* --- CORREÇÃO DE LAYOUT DO TEXTO --- */
+        #branding .texto-marca {
+            display: flex;
+            flex-direction: column; /* Garante que o slogan fique abaixo do nome */
+            justify-content: center;
+        }
+
         #branding .texto-marca h3 {
             margin: 0;
             padding: 0;
@@ -68,14 +75,16 @@
             color: #00ff9b;
             font-size: 0.9rem;
             font-style: italic;
-            height: 1.2em; /* Altura para evitar que o layout "pule" */
+            min-height: 1.2em; /* Espaço reservado para o slogan */
         }
 
         /* --- EFEITO DE DIGITAÇÃO (CSS) --- */
         .typing-effect {
-            border-right: .1em solid #00ff9b; /* O cursor piscando */
+            border-right: .1em solid #00ff9b;
             white-space: nowrap;
             overflow: hidden;
+            display: inline-block; /* Importante para o cursor */
+            vertical-align: bottom;
             animation: 
                 blinking-cursor .75s step-end infinite;
         }
@@ -289,7 +298,7 @@
                     <h3>Peças Personalizadas</h3>
                     <p>Desenvolvemos e imprimimos peças sob medida para as suas necessidades, de componentes a objetos únicos.</p>
                 </div>
-                <div class="servico-item" data-aos="fade-up" data-aos-delay="300">
+                <div class="servico-item" data-aos-up" data-aos-delay="300">
                     <i class="fas fa-gift"></i>
                     <h3>Decoração e Presentes</h3>
                     <p>Transforme ambientes com itens de decoração exclusivos ou surpreenda alguém com um presente criativo e personalizado.</p>
@@ -340,7 +349,6 @@
     </script>
     
     <script>
-        // Espera a página carregar para iniciar a animação
         document.addEventListener('DOMContentLoaded', function() {
             const textToType = "Se pode ser pensado, pode ser impresso.";
             const typingElement = document.getElementById('slogan-digitado');
@@ -349,20 +357,19 @@
             function type() {
                 if (index < textToType.length) {
                     typingElement.innerHTML += textToType.charAt(index);
-                    // Adiciona a classe apenas uma vez, no início
-                    if (index === 0) {
-                        typingElement.classList.add('typing-effect');
-                    }
                     index++;
-                    setTimeout(type, 80); // Velocidade da digitação
+                    setTimeout(type, 80);
                 } else {
-                    // Para o cursor de piscar quando terminar
-                    typingElement.style.borderRightColor = 'transparent';
+                    // CORREÇÃO: Remove a classe da animação para parar de piscar
+                    typingElement.classList.remove('typing-effect');
+                    // Garante que a barra não fique visível
+                    typingElement.style.borderRight = 'none';
                 }
             }
 
-            // Inicia a digitação após um pequeno atraso para dar tempo da página renderizar
-            setTimeout(type, 1000);
+            // CORREÇÃO: Mostra o cursor piscando ANTES de começar a digitar
+            typingElement.classList.add('typing-effect');
+            setTimeout(type, 700); // Um pequeno atraso para o efeito
         });
     </script>
 
