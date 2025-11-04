@@ -188,10 +188,9 @@
             font-size: 1.5rem;
         }
         
-        /* --- PORTFÓLIO: CÓDIGO ATUALIZADO --- */
+        /* --- PORTFÓLIO --- */
         #portfolio .galeria {
             display: grid;
-            /* Diminuímos o valor mínimo para ajudar a caberem 4 colunas em telas maiores */
             grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
             gap: 20px;
         }
@@ -202,6 +201,7 @@
             overflow: hidden; 
             transition: transform 0.3s, box-shadow 0.3s;
             border: 1px solid #444;
+            cursor: pointer; /* <-- ADICIONADO: Indica que é clicável */
         }
 
         #portfolio .galeria .item-galeria img {
@@ -220,7 +220,6 @@
         #portfolio .galeria .item-galeria:hover img {
             transform: scale(1.1);
         }
-        /* --- FIM DA ATUALIZAÇÃO DO PORTFÓLIO --- */
 
 
         /* Seção Contato */
@@ -283,6 +282,58 @@
         #whatsapp-button:hover {
             transform: scale(1.1);
         }
+        
+        
+        /* --- ESTILOS DO LIGHTBOX (ADICIONADO) --- */
+        #lightbox {
+            display: none; /* Escondido por padrão */
+            position: fixed;
+            z-index: 2000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.85);
+            
+            /* Centraliza o conteúdo com Flexbox */
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            box-sizing: border-box; /* Garante que o padding não estoure a tela */
+        }
+
+        .lightbox-content {
+            max-width: 90%;
+            max-height: 80%;
+            object-fit: contain; /* Garante que a imagem caiba sem distorcer */
+            border-radius: 5px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.5);
+        }
+
+        .lightbox-close {
+            position: absolute;
+            top: 15px;
+            right: 35px;
+            color: #f1f1f1;
+            font-size: 40px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: color 0.3s;
+        }
+
+        .lightbox-close:hover {
+            color: #00ff9b;
+        }
+
+        #lightbox-caption {
+            margin-top: 15px;
+            color: #ccc;
+            font-size: 1.1rem;
+            text-align: center;
+        }
+        /* --- FIM DOS ESTILOS DO LIGHTBOX --- */
 
 
         /* --- ESTILOS PARA DISPOSITIVOS MÓVEIS (DESIGN RESPONSIVO) --- */
@@ -363,6 +414,18 @@
                 bottom: 15px;
                 right: 15px;
             }
+            
+            /* --- ESTILOS RESPONSIVOS DO LIGHTBOX (ADICIONADO) --- */
+            .lightbox-content {
+                max-width: 100%; /* Ocupa mais largura em telas pequenas */
+                max-height: 75%;
+            }
+            .lightbox-close {
+                top: 10px;
+                right: 20px;
+                font-size: 30px;
+            }
+            /* --- FIM DOS ESTILOS RESPONSIVOS DO LIGHTBOX --- */
         }
     </style>
 </head>
@@ -377,7 +440,7 @@
                     <p id="slogan-digitado"></p>
                 </div>
             </div>
-            <button id="hamburger-menu" aria-label="Abrir Menu">
+            <button id="hamburger-menu" aria-label="Abrir Menu" aria-expanded="false">
                 <i class="fas fa-bars"></i>
             </button>
             <nav>
@@ -452,6 +515,12 @@
         </div>
     </section>
 
+    <div id="lightbox" style="display: none;" role="dialog" aria-modal="true" aria-labelledby="lightbox-caption">
+        <span class="lightbox-close" aria-label="Fechar">&times;</span>
+        <img class="lightbox-content" id="lightbox-img" src="" alt="Imagem ampliada">
+        <div id="lightbox-caption"></div>
+    </div>
+
     <footer>
         <div class="container">
             <p>&copy; 2025 BG Impressões Especiais impressões 3D. Todos os direitos reservados.</p>
@@ -473,17 +542,78 @@
     
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            // Script do slogan
+            
+            // --- Script do slogan ---
             const textToType = "Se pode ser pensado, pode ser impresso.";
             const typingElement = document.getElementById('slogan-digitado');
-            let index = 0;
-            function type() { if (index < textToType.length) { typingElement.innerHTML += textToType.charAt(index); index++; setTimeout(type, 70); } }
-            setTimeout(type, 700);
+            
+            if (typingElement) { 
+                let index = 0;
+                function type() { 
+                    if (index < textToType.length) { 
+                        typingElement.innerHTML += textToType.charAt(index); 
+                        index++; 
+                        setTimeout(type, 70); 
+                    } 
+                }
+                setTimeout(type, 700);
+            }
 
-            // Script para o menu hambúrguer
+            // --- Script para o menu hambúrguer ---
             const hamburgerButton = document.getElementById('hamburger-menu');
             const navMenu = document.querySelector('header nav');
-            hamburgerButton.addEventListener('click', function() { navMenu.classList.toggle('menu-open'); });
+
+            if (hamburgerButton && navMenu) { 
+                hamburgerButton.addEventListener('click', function() { 
+                    navMenu.classList.toggle('menu-open');
+                    const isMenuOpen = navMenu.classList.contains('menu-open');
+                    hamburgerButton.setAttribute('aria-expanded', isMenuOpen);
+                });
+            }
+            
+            // --- SCRIPT DO LIGHTBOX (ADICIONADO) ---
+            const galleryItems = document.querySelectorAll('#portfolio .galeria .item-galeria');
+            const lightbox = document.getElementById('lightbox');
+            const lightboxImg = document.getElementById('lightbox-img');
+            const lightboxCaption = document.getElementById('lightbox-caption');
+            const closeButton = document.querySelector('.lightbox-close');
+
+            // Verifica se todos os elementos do lightbox existem
+            if (lightbox && lightboxImg && lightboxCaption && closeButton && galleryItems.length > 0) {
+                
+                // Adiciona o clique para cada item da galeria
+                galleryItems.forEach(item => {
+                    item.addEventListener('click', () => {
+                        const img = item.querySelector('img');
+                        if (img) {
+                            // Pega o link da imagem e a legenda (alt text)
+                            lightboxImg.src = img.src;
+                            lightboxCaption.textContent = img.alt;
+                            
+                            // Mostra o lightbox
+                            lightbox.style.display = 'flex';
+                        }
+                    });
+                });
+
+                // Função para fechar o lightbox
+                const closeLightbox = () => {
+                    lightbox.style.display = 'none'; // Esconde
+                    lightboxImg.src = ''; // Limpa a imagem para não "piscar" na próxima vez
+                };
+
+                // Fecha ao clicar no botão 'X'
+                closeButton.addEventListener('click', closeLightbox);
+
+                // Fecha ao clicar no fundo (overlay)
+                lightbox.addEventListener('click', (e) => {
+                    // Verifica se o clique foi no próprio fundo (e não na imagem)
+                    if (e.target === lightbox) { 
+                        closeLightbox();
+                    }
+                });
+            }
+
         });
     </script>
 
