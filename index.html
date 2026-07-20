@@ -493,22 +493,22 @@
     .feature-list { display: grid; gap: 13px; margin-top: 26px; }
     .feature-list li { list-style: none; display: flex; gap: 11px; align-items: flex-start; color: #dfe6ee; }
     .feature-list i { margin-top: 5px; color: var(--gold); }
-    .video-shell { position: relative; min-height: 620px; background: #05080c; overflow: hidden; }
-    .video-shell video { width: 100%; height: 100%; object-fit: cover; object-position: center; }
-    .video-label {
-      position: absolute;
-      top: 18px; right: 18px;
-      display: inline-flex; align-items: center; gap: 8px;
-      padding: 9px 12px;
-      border: 1px solid rgba(255,255,255,.15);
-      border-radius: 999px;
-      background: rgba(4,7,11,.72);
-      color: #dce4ed;
-      font-size: .76rem;
-      font-weight: 800;
-      backdrop-filter: blur(8px);
+    .video-shell {
+      position: relative;
+      height: 620px;
+      min-height: 620px;
+      display: grid;
+      place-items: center;
+      background: #05080c;
+      overflow: hidden;
     }
-    .video-label i { color: var(--gold); }
+    .video-shell video {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      object-position: center;
+      background: #05080c;
+    }
     .video-control {
       position: absolute;
       left: 18px; bottom: 18px;
@@ -704,7 +704,7 @@
       .product-grid { grid-template-columns: repeat(2, minmax(0,1fr)); }
       .feature-grid { grid-template-columns: 1fr; }
       .feature-copy { padding: 44px; }
-      .video-shell { min-height: 720px; }
+      .video-shell { height: 720px; min-height: 720px; }
       .steps-grid { grid-template-columns: repeat(2, minmax(0,1fr)); }
       .footer-grid { grid-template-columns: 1fr 1fr; }
       .footer-brand { grid-column: span 2; }
@@ -732,7 +732,7 @@
       .product-grid { grid-template-columns: 1fr; }
       .product-content p { min-height: 0; }
       .feature-copy { padding: 30px 24px; }
-      .video-shell { min-height: 610px; }
+      .video-shell { height: 610px; min-height: 610px; }
       .gallery-grid { grid-template-columns: 1fr; grid-auto-rows: auto; }
       .gallery-item, .gallery-item.wide, .gallery-item.tall { grid-column: auto; grid-row: auto; aspect-ratio: 4 / 5; }
       .steps-grid { grid-template-columns: 1fr; }
@@ -1029,13 +1029,13 @@
             <span class="eyebrow">Produção acontecendo</span>
             <h2>Veja a impressão tomando forma.</h2>
             <p>
-              O vídeo foi otimizado para carregar muito mais rápido no celular, permanece com o mesmo nome e é reproduzido automaticamente sem som.
+              Acompanhe de perto uma peça ganhando forma, camada por camada, até chegar ao acabamento final.
             </p>
             <ul class="feature-list">
-              <li><i class="fa-solid fa-volume-xmark"></i><span><strong>Sem áudio:</strong> não incomoda quem entra no site.</span></li>
-              <li><i class="fa-solid fa-repeat"></i><span><strong>Reprodução contínua:</strong> toca em loop para mostrar a produção.</span></li>
-              <li><i class="fa-solid fa-mobile-screen-button"></i><span><strong>Orientação corrigida:</strong> aparece em pé no celular e no computador.</span></li>
-              <li><i class="fa-solid fa-gauge-high"></i><span><strong>Arquivo otimizado:</strong> reduzido para carregar com mais velocidade.</span></li>
+              <li><i class="fa-solid fa-cube"></i><span><strong>Produção própria:</strong> acompanhamento direto de cada etapa.</span></li>
+              <li><i class="fa-solid fa-layer-group"></i><span><strong>Impressão em duas cores:</strong> contraste que valoriza os detalhes.</span></li>
+              <li><i class="fa-solid fa-pen-ruler"></i><span><strong>Projetos sob medida:</strong> peças desenvolvidas conforme sua ideia.</span></li>
+              <li><i class="fa-solid fa-magnifying-glass"></i><span><strong>Atenção ao acabamento:</strong> cada produto é conferido antes da entrega.</span></li>
             </ul>
             <div class="hero-actions">
               <a class="btn btn-primary" href="https://wa.me/5551980889064?text=Ol%C3%A1%21%20Vi%20o%20processo%20de%20impress%C3%A3o%20no%20site%20e%20quero%20fazer%20uma%20pe%C3%A7a." target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-whatsapp"></i> Quero produzir uma peça</a>
@@ -1043,9 +1043,10 @@
           </div>
 
           <div class="video-shell">
-            <video id="productionVideo" src="midia/56921.mp4" poster="midia/56994.jpg" autoplay muted loop playsinline preload="metadata"></video>
-            <span class="video-label"><i class="fa-solid fa-volume-xmark"></i> Vídeo sem som</span>
-            <button class="video-control" id="videoControl" type="button" aria-label="Pausar vídeo"><i class="fa-solid fa-pause"></i></button>
+            <video id="productionVideo" poster="midia/56921-poster.jpg" autoplay muted loop playsinline controls preload="auto">
+              <source src="midia/56921.mp4?v=2" type="video/mp4">
+              Seu navegador não conseguiu reproduzir este vídeo.
+            </video>
           </div>
         </div>
       </div>
@@ -1199,7 +1200,7 @@
       </div>
       <div class="footer-bottom">
         <span>© 2026 BG Impressões Especiais. Todos os direitos reservados.</span>
-        <span>Fotos reais • vídeo sem som • atendimento direto</span>
+        <span>Fotos reais • produção própria • atendimento direto</span>
       </div>
     </div>
   </footer>
@@ -1324,18 +1325,12 @@
     document.addEventListener('keydown', event => { if (event.key === 'Escape') { closeMenu(); closeLightbox(); } });
 
     const productionVideo = document.getElementById('productionVideo');
-    const videoControl = document.getElementById('videoControl');
-    videoControl.addEventListener('click', () => {
-      if (productionVideo.paused) {
-        productionVideo.play();
-        videoControl.innerHTML = '<i class="fa-solid fa-pause"></i>';
-        videoControl.setAttribute('aria-label', 'Pausar vídeo');
-      } else {
-        productionVideo.pause();
-        videoControl.innerHTML = '<i class="fa-solid fa-play"></i>';
-        videoControl.setAttribute('aria-label', 'Reproduzir vídeo');
-      }
-    });
+    if (productionVideo) {
+      productionVideo.muted = true;
+      productionVideo.play().catch(() => {
+        // Os controles permanecem visíveis caso o navegador bloqueie a reprodução automática.
+      });
+    }
   </script>
 </body>
 </html>
